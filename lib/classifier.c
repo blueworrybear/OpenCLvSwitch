@@ -616,6 +616,7 @@ struct cls_rule *classifier_lookup_miniflow_first(const struct classifier *cls,
     LIST_FOR_EACH (subtable, list_node, &cls->subtables_priority) {
         struct cls_rule *rule;
 
+        //miniflow_hash_in_minimask just return a flow key hash.
         rule = find_match_miniflow(subtable, flow,
                                    miniflow_hash_in_minimask(flow,
                                                              &subtable->mask,

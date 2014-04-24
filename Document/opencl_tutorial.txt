@@ -1,0 +1,8 @@
+
+How to include another head file in OpenCL
+http://devgurus.amd.com/thread/166087
+
+Call function in OpenCL
+http://stackoverflow.com/questions/7741256/calling-opencl-kernel-from-another-opencl-kernel
+
+
