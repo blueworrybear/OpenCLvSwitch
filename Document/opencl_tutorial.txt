@@ -1,5 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 OpenCL Tutorial Source
+=======
+OpenCL dsf5555
+>>>>>>> FETCH_HEAD
 =======
 OpenCL dsf5555
 >>>>>>> FETCH_HEAD
