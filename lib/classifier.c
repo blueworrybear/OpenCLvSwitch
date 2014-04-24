@@ -27,7 +27,7 @@
 #include "ovs-thread.h"
 #include "packets.h"
 #include "vlog.h"
-#include "classifier-cl.h"
+#include "<OpenCL/classifier-cl.h>
 
 VLOG_DEFINE_THIS_MODULE(classifier);
 
