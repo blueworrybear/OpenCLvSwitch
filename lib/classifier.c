@@ -613,7 +613,7 @@ struct cls_rule *classifier_lookup_miniflow_first(const struct classifier *cls,
                                                   const struct miniflow *flow)
 {
     struct cls_subtable *subtable;
-    classifier_cl(flow);
+    char* test = classifier_cl(flow);
     LIST_FOR_EACH (subtable, list_node, &cls->subtables_priority) {
         struct cls_rule *rule;
 

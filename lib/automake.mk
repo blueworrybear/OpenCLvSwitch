@@ -240,7 +240,9 @@ lib_libopenvswitch_la_SOURCES = \
 	lib/vtep-idl.c \
 	lib/vtep-idl.h\
 	lib/OpenCL/dpif-netdev-cl.c\
-	lib/OpenCL/dpif-netdev-cl.h
+	lib/OpenCL/dpif-netdev-cl.h\
+	lib/OpenCL/classifier-cl.c\
+	lib/OpenCL/classifier-cl.h
 
 if WIN32
 lib_libopenvswitch_la_SOURCES += \
