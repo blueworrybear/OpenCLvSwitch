@@ -61,6 +61,7 @@
 #include "unixctl.h"
 #include "util.h"
 #include "vlog.h"
+#include <OpenCL/dpif-netdev-cl.h>
 
 VLOG_DEFINE_THIS_MODULE(dpif_netdev);
 
@@ -1069,7 +1070,7 @@ dp_netdev_lookup_flow(const struct dp_netdev *dp, const struct miniflow *key)
 {
     struct dp_netdev_flow *netdev_flow;
     struct cls_rule *rule;
-
+	VLOG_INFO("look up");
     fat_rwlock_rdlock(&dp->cls.rwlock);
     rule = classifier_lookup_miniflow_first(&dp->cls, key);
     netdev_flow = dp_netdev_flow_cast(rule);
@@ -1213,7 +1214,7 @@ dpif_netdev_flow_get(const struct dpif *dpif,
     struct dp_netdev_flow *netdev_flow;
     struct flow key;
     int error;
-
+	VLOG_INFO("flow get");
     error = dpif_netdev_flow_from_nlattrs(nl_key, nl_key_len, &key);
     if (error) {
         return error;
@@ -1221,8 +1222,14 @@ dpif_netdev_flow_get(const struct dpif *dpif,
 
     fat_rwlock_rdlock(&dp->cls.rwlock);
     netdev_flow = dp_netdev_find_flow(dp, &key);
+    char* test = hello_cl();
+    VLOG_INFO("OpenCL: %s",test);
     fat_rwlock_unlock(&dp->cls.rwlock);
-
+	
+	VLOG_INFO("IP:("IP_FMT")",
+                  IP_ARGS(netdev_flow->flow.nw_src));
+                  
+                  
     if (netdev_flow) {
         if (stats) {
             get_dpif_flow_stats(netdev_flow, stats);
@@ -1300,7 +1307,7 @@ dpif_netdev_flow_put(struct dpif *dpif, const struct dpif_flow_put *put)
     struct miniflow miniflow;
     struct flow_wildcards wc;
     int error;
-
+	VLOG_INFO(" put flow.");
     error = dpif_netdev_flow_from_nlattrs(put->key, put->key_len, &flow);
     if (error) {
         return error;
@@ -2015,7 +2022,7 @@ dp_netdev_input(struct dp_netdev *dp, struct ofpbuf *packet,
     struct dp_netdev_flow *netdev_flow;
     struct miniflow key;
     uint32_t buf[FLOW_U32S];
-
+	VLOG_INFO("dp_netdev_input packet.");
     if (ofpbuf_size(packet) < ETH_HEADER_LEN) {
         ofpbuf_delete(packet);
         return;
@@ -2049,7 +2056,7 @@ dp_netdev_port_input(struct dp_netdev *dp, struct ofpbuf *packet,
     OVS_REQ_RDLOCK(dp->port_rwlock)
 {
     uint32_t *recirc_depth = recirc_depth_get();
-
+	VLOG_INFO("port input packet.");
     *recirc_depth = 0;
     dp_netdev_input(dp, packet, md);
 }
@@ -2126,9 +2133,11 @@ dp_execute_cb(void *aux_, struct ofpbuf *packet,
     int type = nl_attr_type(a);
     struct dp_netdev_port *p;
     uint32_t *depth = recirc_depth_get();
-
+	
+	VLOG_INFO("execute cb.");
     switch ((enum ovs_action_attr)type) {
     case OVS_ACTION_ATTR_OUTPUT:
+    	VLOG_INFO("OVS_ACTION_ATTR_OUTPUT");
         p = dp_netdev_lookup_port(aux->dp, u32_to_odp(nl_attr_get_u32(a)));
         if (p) {
             netdev_send(p->netdev, packet, may_steal);
@@ -2137,7 +2146,7 @@ dp_execute_cb(void *aux_, struct ofpbuf *packet,
 
     case OVS_ACTION_ATTR_USERSPACE: {
         const struct nlattr *userdata;
-
+		VLOG_INFO("OVS_ACTION_ATR_USERSPACE");
         userdata = nl_attr_find_nested(a, OVS_USERSPACE_ATTR_USERDATA);
 
         dp_netdev_output_userspace(aux->dp, packet,
@@ -2153,6 +2162,7 @@ dp_execute_cb(void *aux_, struct ofpbuf *packet,
     }
 
     case OVS_ACTION_ATTR_HASH: {
+    	VLOG_INFO("ACTTION HASH");
         const struct ovs_action_hash *hash_act;
         uint32_t hash;
 
@@ -2175,6 +2185,7 @@ dp_execute_cb(void *aux_, struct ofpbuf *packet,
     }
 
     case OVS_ACTION_ATTR_RECIRC:
+    	VLOG_INFO("ACTION_RECIC");
         if (*depth < MAX_RECIRC_DEPTH) {
             struct pkt_metadata recirc_md = *md;
             struct ofpbuf *recirc_packet;

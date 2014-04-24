@@ -293,6 +293,10 @@ if LINUX_ENABLED
 	cd datapath/linux && $(MAKE) modules_install
 endif
 
+build_opencl:
+	test -d /usr/lib/CLvSwitch || mkdir /usr/lib/CLvSwitch
+	cp $(srcdir)/lib/OpenCL/kernels/* /usr/lib/CLvSwitch/
+
 include m4/automake.mk
 include lib/automake.mk
 include ofproto/automake.mk
