@@ -1,8 +1,16 @@
 
 How to include another head file in OpenCL
 http://devgurus.amd.com/thread/166087
+http://www.khronos.org/message_boards/showthread.php/6272-opencl-API-include-headers-to-cl-file
 
 Call function in OpenCL
 http://stackoverflow.com/questions/7741256/calling-opencl-kernel-from-another-opencl-kernel
 
+How to using structure in OpenCL
+http://www.opentk.com/node/1496
 
+Using structure and point in OpenCL ( with example and detail explaination)
+http://www.khronos.org/message_boards/showthread.php/8723-can-we-use-structure-in-opencl
+
+Interesting library (Reduce host work)
+https://code.google.com/p/simple-opencl/
