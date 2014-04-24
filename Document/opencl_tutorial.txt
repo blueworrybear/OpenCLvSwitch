@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-OpenCL Tutorial Source
-=======
 OpenCL dsf5555
->>>>>>> FETCH_HEAD
-=======
-OpenCL dsf5555
->>>>>>> FETCH_HEAD
 
 How to include another head file in OpenCL
 http://devgurus.amd.com/thread/166087
