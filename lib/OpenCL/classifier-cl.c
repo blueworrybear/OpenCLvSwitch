@@ -65,7 +65,7 @@ char* classifier_cl(const struct miniflow *flow){
     
     //Set OpenCL Kernel Parameters
     // ret = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&memobj);
-    ret = clSetKernelArg(kernel, 0, sizeof(char*), (void *)&memobj);
+    ret = clSetKernelArgSVMPointer(kernel,0,memobj);
     
     //Execute OpenCL Kernel
     ret = clEnqueueTask(command_queue, kernel, 0, NULL, NULL);
